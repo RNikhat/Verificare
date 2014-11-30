@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Verificare</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Not Functional Yet!</string>
+    <string name="drawer_open">Menu</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+       
+        <item>View Uploads</item>
+        <item>New  Patient</item>
+        <item>View Reports</item>
+        <item>View Appointment Data</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_photos</item>
+        <item>@drawable/ic_communities</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_whats_hot</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+
+    <!-- New Patient Fields -->
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="dob">DOB</string>
+    <string name="age">Age</string>
+    <string name="policyid">Policy Id</string>
+    <string name="effectivedate">Effective Date</string>
+    <string name="insurance">Insurance:</string>
+    <string name="gender">Gender:</string>
+    <string name="appointment">Appointment:</string>
+    <string name="priority">Priority:</string>
+    <string name="provider">Provider</string>
+    <string name="ssno">SSNo</string>
+    <string name="patient_phone">Phone</string>
+    <string name="email">Email</string>
+    <string name="employer">Employer</string>
+    <string name="officephone">Office Phone</string>
+    <string name="physician">Physician</string>
+    <string name="network">Network</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="payorid">Payor Id</string>
+    <string name="insurancecompany">Insurance Company</string>
+    <string name="insurancerep">Insurance Rep:</string>
+    <string name="policyno">Policy No</string>
+    <string name="groupno">Group No</string>
+    <string name="insurance_phone">Phone</string>
+    <string name="policyeffective">Policy Effective</string>
+    <string name="policyending">Policy Ending</string>
+    <string name="patinet_info">Patient Information</string>
+    <string name="insurance_info">Insurance Information</string>
+    <string name="patient_data">Patient Data</string>
+    <string name="save">Save</string>
+    <string name="clear">Clear</string>
+    <string name="browse">Browse</string>
+    <string name="upload">Upload</string>
+    <string name="select">Select Provider:</string>
+    <string name="uploadpatientdata">Upload Patient Data</string>
+    <string name="nofileselect">No file selected</string>
+    <string name="selectdate">Select Date</string>
+
+    <string-array name="insurance_array">
+        <item>Insurance</item>
+        <item>MetLife</item>
+        <item>AXA</item>
+        <item>United Health</item>
+    </string-array>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female<item/>
+        </item>
+    </string-array>
+    <string-array name="provider_array">
+        <item>Provider</item>
+        <item>Massachusetts</item>
+        <item>Texas Medical Center</item>
+        <item>Cleveland Clinic</item>
+        <item>UCSF Medical Center</item>
+        <item>Marshfield Clinic</item>
+    </string-array>
+
+</resources>

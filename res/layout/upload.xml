@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- android:background="@android:color/transparent" -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_upload"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:padding="10dp"
+    android:hapticFeedbackEnabled="true"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/l2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvtitle"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tvfileselected"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Browse"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/edittext"
+            android:paddingLeft="10dp" >
+        </TextView>
+
+        <Button
+            android:id="@+id/btnchoosefile"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:layout_marginRight="60dp"
+            android:text="@string/browse"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:paddingBottom="20dp"
+        android:text="@string/uploadpatientdata"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnupload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/l2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:background="#FF0099CC"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/upload" />
+
+</RelativeLayout>
