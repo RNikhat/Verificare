@@ -247,8 +247,8 @@ public class Login extends Activity implements OnClickListener {
 				showToast("Please Enter Password");
 			} else {
 				HttpGetTask mTask = new HttpGetTask();
-				//mTask.execute(url);
-				startActivity(new Intent(getApplicationContext(), MainActivity.class));
+				mTask.execute(url);
+				//startActivity(new Intent(getApplicationContext(), MainActivity.class));
 			}
 
 			break;
@@ -331,6 +331,7 @@ public class Login extends Activity implements OnClickListener {
 
 				writeToFile(sName + "~" + sPwd, PATH + "login");
 				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				i.putExtra("user", sName);
 				startActivity(i);
 
 			} catch (Exception ex) {
