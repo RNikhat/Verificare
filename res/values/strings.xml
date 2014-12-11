@@ -90,5 +90,6 @@
         <item>UCSF Medical Center</item>
         <item>Marshfield Clinic</item>
     </string-array>
+        <string name="welcome">Welcome to VERIFICARE, please click on top left corner to select what you want to view</string>
 
 </resources>

@@ -97,6 +97,7 @@ public class MainActivity extends ActionBarActivity {
 		View mCustomView = mInflater.inflate(R.layout.actionbar, null);
 		TextView mTitleTextView = (TextView) mCustomView
 				.findViewById(R.id.title_text);
+		mTitleTextView.setSelected(true);
 		mTitleTextView.setText("Welcome " + getIntent().getStringExtra("user"));
 
 		ImageView imageButton = (ImageView) mCustomView
@@ -117,7 +118,7 @@ public class MainActivity extends ActionBarActivity {
 
 		getSupportActionBar().setDisplayOptions(
 				ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_HOME
-						//| ActionBar.DISPLAY_SHOW_TITLE
+				// | ActionBar.DISPLAY_SHOW_TITLE
 						| ActionBar.DISPLAY_HOME_AS_UP);
 
 		getSupportActionBar().setCustomView(mCustomView);
@@ -156,7 +157,7 @@ public class MainActivity extends ActionBarActivity {
 
 		if (savedInstanceState == null) {
 			// on first time display view for first nav item
-			displayView(0);
+			displayView(999);
 		}
 	}
 
@@ -213,6 +214,9 @@ public class MainActivity extends ActionBarActivity {
 		Fragment fragment = null;
 		switch (position) {
 
+		case 999:
+			fragment = new HomeFragment();
+			break;
 		case 0:
 			fragment = new UploadDetailsFragment();
 			break;
@@ -238,9 +242,11 @@ public class MainActivity extends ActionBarActivity {
 					.replace(R.id.frame_container, fragment)
 					.addToBackStack(fragment.getClass().getName()).commit();
 			// update selected item and title, then close the drawer
-			mDrawerList.setItemChecked(position, true);
-			mDrawerList.setSelection(position);
-			setTitle(navMenuTitles[position]);
+			if (position != 999) {
+				mDrawerList.setItemChecked(position, true);
+				mDrawerList.setSelection(position);
+				setTitle(navMenuTitles[position]);
+			}
 			mDrawerLayout.closeDrawer(mDrawerList);
 		} else {
 			// error in creating fragment

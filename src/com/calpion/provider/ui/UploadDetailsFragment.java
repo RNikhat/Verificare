@@ -9,20 +9,24 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+
 import com.calpion.provider.R;
 import com.calpion.provider.model.JsonParser;
 import com.calpion.provider.model.PatientBean;
+import com.calpion.provider.ui.Login.HttpGetTask;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -55,6 +59,7 @@ public class UploadDetailsFragment extends Fragment {
 	private ArrayList<HashMap<String, String>> mPatientsFilter;
 	public static HashMap mMap, mapBackup;
 	private Button btnSearch;
+	Context c;
 	public SimpleAdapter adapter;
 	public EditText editsearch;
 	String url = "http://202.83.17.167:8090/api/Upload/GetAllUploads";
@@ -84,6 +89,8 @@ public class UploadDetailsFragment extends Fragment {
 					int position, long id) {
 				mMap = mPatients.get(position);
 
+				ExecutorService exs = Executors.newFixedThreadPool(5);
+				
 			}
 		});
 
@@ -151,57 +158,17 @@ public class UploadDetailsFragment extends Fragment {
 
 			}
 		});
+				PD = new ProgressDialog(getActivity());
+				PD.setMessage("Loading.....");
+				PD.setCancelable(true);
 
-		// new HttpGetTask().execute(url);
-		PD = new ProgressDialog(getActivity());
-		PD.setMessage("Loading.....");
-		PD.setCancelable(false);
-		MakeJsonArrayReq();
+		HttpGetTask mTask = new HttpGetTask();
+		mTask.execute(url);
+	
+	
+		populateList();
 
 		return view;
-	}
-
-	private void MakeJsonArrayReq() {
-		PD.show();
-
-		JsonArrayRequest jreq = new JsonArrayRequest(url,
-				new Response.Listener<JSONArray>() {
-
-					@Override
-					public void onResponse(JSONArray response) {
-
-						for (int i = 0; i < response.length(); i++) {
-							try {
-								JSONObject jo = response.getJSONObject(i);
-								String name = jo.getString("name");
-
-								HashMap<String, String> map = new HashMap<String, String>();
-
-								map.put("id", "1");
-								map.put("file_name", jo.getString("id"));
-								map.put("file_size", "8KB");
-								map.put("uploaded_by", "Test");
-								map.put("upload_date", "8/18/2014");
-								map.put("action", "test action");
-								mPatients.add(map);
-
-								orgPatientList.addAll(mPatients);
-
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-						}
-
-						PD.dismiss();
-						adapter.notifyDataSetChanged();
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-					}
-				});
-
-		MyApplication.getInstance().addToReqQueue(jreq, "jreq");
 	}
 
 	protected void performSearch() {
@@ -227,7 +194,7 @@ public class UploadDetailsFragment extends Fragment {
 
 	}
 
-	public void populateList(JSONArray result) {
+	public void populateList() {
 		HashMap<String, String> map = new HashMap<String, String>();
 
 		/*
@@ -237,19 +204,59 @@ public class UploadDetailsFragment extends Fragment {
 		 * "8KB"); map.put("uploaded_by", "Test"); map.put("upload_date",
 		 * "8/18/2014"); map.put("action", "test action"); mPatients.add(map); }
 		 */
+		for(int i=1;i<5;i++){
 		HashMap<String, String> map1 = new HashMap<String, String>();
-		map1.put("id", "1");
-		map1.put("file_name", "abc");
-		map1.put("file_size", "8KB");
-		map1.put("uploaded_by", "Test");
-		map1.put("upload_date", "8/17/2014");
-		map1.put("action", "test action");
+		map1.put("id"+i, "1");
+		map1.put("file_name"+i, "abc");
+		map1.put("file_size"+i, "8KB");
+		map1.put("uploaded_by"+i, "Test");
+		map1.put("upload_date"+i, "8/17/2014");
+		map1.put("action"+i, "test action");
 		mPatients.add(map1);
+		}
 
 		orgPatientList.addAll(mPatients);
+		adapter.notifyDataSetChanged();
 
 	}
+	public class HttpGetTask extends AsyncTask<String, String, Boolean> {
+		String mResult;
+		//private ProgressDialog dialog;// = new ProgressDialog(getBaseContext());
 
+		protected void onPreExecute() {
+		//	dialog = new ProgressDialog(c);
+			PD.setMessage("Processing");
+			PD.setCancelable(false);
+			PD.setCanceledOnTouchOutside(false);
+			PD.show();
+		}
+
+		protected void onPostExecute(Boolean result) {
+			if (PD.isShowing()) {
+				PD.dismiss();
+			}
+			populateList();
+
+		}
+
+		@Override
+		protected Boolean doInBackground(String... args) {
+			String json = null;
+
+			try {
+				JsonParser jParser = new JsonParser();
+				//
+				// Getting JSON from URL
+				json = jParser.httpGet(args[0]);
+				if (json.contains("success"))
+					return true;
+
+			} catch (Exception e) {
+				Log.e("Error: ", " "+e.getMessage());
+			}
+			return false;
+		}
+	}
 	public void setText(String item) {
 	}
 

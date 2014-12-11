@@ -7,6 +7,5 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="/android-support-v7-appcompat"/>
 	<classpathentry exported="true" kind="lib" path="libs/json-simple-1.1.1.jar"/>
-	<classpathentry kind="src" path="/Volley"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -1,14 +1,14 @@
 package com.calpion.provider.ui;
 
 import android.app.Application;
-
+/*
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.Volley;*/
 
 public class MyApplication extends Application {
 
-    private RequestQueue mRequestQueue;
+  //  private RequestQueue mRequestQueue;
     private static MyApplication mInstance;
 
     @Override
@@ -20,10 +20,10 @@ public class MyApplication extends Application {
     public static synchronized MyApplication getInstance() {
         return mInstance;
     }
-
-    public RequestQueue getReqQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+/*
+   public RequestQueue getReqQueue() {
+       if (mRequestQueue == null) {
+          mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
 
         return mRequestQueue;
@@ -43,5 +43,5 @@ public class MyApplication extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
-    }
+    }*/
 }

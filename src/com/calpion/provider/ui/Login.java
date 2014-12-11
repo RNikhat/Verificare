@@ -59,7 +59,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 public class Login extends Activity implements OnClickListener {
-	Button bLogin, btnCancel, btnBack, btnNext;
+	Button bLogin, btnCancel, btnBack, btnNext, btnLogin;
 	EditText u_name, passw;
 	CheckBox cbRememberMe;
 	ViewFlipper flipper;
@@ -77,7 +77,7 @@ public class Login extends Activity implements OnClickListener {
 	public SharedPreferences mPref;
 	public SharedPreferences.Editor mEditor;
 	String sName;
-	//String url = "http://202.83.17.167:8090/api/User/IsValidUser";
+	// String url = "http://202.83.17.167:8090/api/User/IsValidUser";
 	String url = "http://202.83.17.167:8090/api/Upload/GetAllUploads";
 
 	@Override
@@ -101,12 +101,14 @@ public class Login extends Activity implements OnClickListener {
 		 * 
 		 * btnNext.setVisibility(View.GONE); btnBack.setVisibility(View.GONE);
 		 */
-		
-/*		Intent hangouts = new Intent(Intent.ACTION_SEND);
-		hangouts.setPackage("com.google.android.talk");
-		hangouts.setType("text/plain");
-		startActivity(hangouts);//Intent.createChooser(hangouts, "Hangouts is not installed."));
-*/		
+
+		/*
+		 * Intent hangouts = new Intent(Intent.ACTION_SEND);
+		 * hangouts.setPackage("com.google.android.talk");
+		 * hangouts.setType("text/plain");
+		 * startActivity(hangouts);//Intent.createChooser(hangouts,
+		 * "Hangouts is not installed."));
+		 */
 		mPref = getSharedPreferences("login", MODE_PRIVATE);
 		mEditor = mPref.edit();
 		bLogin = (Button) findViewById(R.id.blogin);
@@ -115,7 +117,7 @@ public class Login extends Activity implements OnClickListener {
 		passw = (EditText) findViewById(R.id.edit_passwd);
 		cbRememberMe = (CheckBox) findViewById(R.id.cbRememberMe);
 		mradius = mPref.getString("radius", "");
-		c= this;
+		c = this;
 		if (mradius.length() == 0) {
 			mradius = "100";
 		}
@@ -243,51 +245,15 @@ public class Login extends Activity implements OnClickListener {
 				showToast("Please Enter Username");
 			} else if (sPwd.trim().length() == 0) {
 				showToast("Please Enter Password");
-			} else if (!bLogin.getText().equals("Register")
-					&& (!sPwd.equals(sPassword) || !sName.equals(sUserName))) {
-				showToast("Invalid Crendentials");
-
-			} else{
+			} else {
 				HttpGetTask mTask = new HttpGetTask();
-				mTask.execute(url);
-				/*if (bLogin.getText().equals("Register")) {
-				try {
-
-					String PATH = Environment.getExternalStorageDirectory()
-							+ "/healthpay/";
-					File loginFile = new File(PATH, "login");
-					if (!loginFile.exists()) {
-						loginFile.createNewFile();
-					}
-
-					writeToFile(sName + "~" + sPwd, PATH + "login");
-					i = new Intent(this, MainActivity.class);
-					i.putExtra("user", sName);
-					startActivity(i);
-					finish();
-					return;
-
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					showToast("Could not remember the user");
-				}
-
-			} else {*/
-				if (cbRememberMe.isChecked())
-					mRemember = "yes";
-				else
-					mRemember = "no";
-				mEditor.putString("remember", mRemember);
-				mEditor.commit();
-				i = new Intent(this, MainActivity.class);
-				i.putExtra("user", sName);
-				startActivity(i);
-				finish();
+				//mTask.execute(url);
+				startActivity(new Intent(getApplicationContext(), MainActivity.class));
 			}
 
 			break;
-
 		}
+
 	}
 
 	@Override
@@ -301,12 +267,11 @@ public class Login extends Activity implements OnClickListener {
 
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+
 	public class HttpGetTask extends AsyncTask<String, String, Boolean> {
 		String mResult;
 		private ProgressDialog dialog;// = new ProgressDialog(getBaseContext());
-		
+
 		protected void onPreExecute() {
 			dialog = new ProgressDialog(c);
 			dialog.setMessage("Processing");
@@ -319,16 +284,9 @@ public class Login extends Activity implements OnClickListener {
 			if (dialog.isShowing()) {
 				dialog.dismiss();
 			}
-			if(result){
-				Intent i = new Intent(getApplicationContext(),MainActivity.class);
-				i.putExtra("user", sName);
-				startActivity(i);
-				finish();
-			}
-				
-			
-			
-			}
+			processResult(result);
+
+		}
 
 		@Override
 		protected Boolean doInBackground(String... args) {
@@ -336,17 +294,54 @@ public class Login extends Activity implements OnClickListener {
 
 			try {
 				JsonParser jParser = new JsonParser();
-			   // 
+				//
 				// Getting JSON from URL
-			   json = jParser.httpGet(args[0]);
-			   json.contains("success");
-				 return true;
-	           
-	         } catch (Exception e) {
-	             Log.e("Error: ", e.getMessage());
-	         }
-	         return false;
-	     }
+				json = jParser.httpGet(args[0]);
+				if (json.contains("success"))
+					return true;
+
+			} catch (Exception e) {
+				Log.e("Error: ", "" +e.getMessage());
+			}
+			return false;
+		}
 	}
-	
+
+	private void processResult(boolean result) {
+		if (!result) {
+
+			String mRemember = "";
+			if (cbRememberMe.isChecked())
+				mRemember = "yes";
+			else
+				mRemember = "no";
+			mEditor.putString("remember", mRemember);
+			mEditor.commit();
+
+			try {
+
+				String PATH = Environment.getExternalStorageDirectory()
+						+ "/healthpay/";
+				File loginFile = new File(PATH, "login");
+				if (!loginFile.exists()) {
+					loginFile.createNewFile();
+				}
+				String sName = u_name.getText().toString();
+				String sPwd = passw.getText().toString();
+
+				writeToFile(sName + "~" + sPwd, PATH + "login");
+				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				startActivity(i);
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				showToast("Error");
+			}
+
+		} else {
+			showToast("Error logging in");
+		}
+
+	}
+
 }

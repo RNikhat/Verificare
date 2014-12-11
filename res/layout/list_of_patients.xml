@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+    <RelativeLayout
+        android:id="@+id/lnmain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvupl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:text="Report"
+            android:textSize="16dp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#006600"
+            android:gravity="center" >
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/chk"
+                android:button="@null"
+                android:focusable="false"
+                android:focusableInTouchMode="false" >
+            </CheckBox>
+
+            <TextView
+                android:id="@+id/tvfname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="First Name"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvlname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="Last Name"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvdob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="DOB"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="Age"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvphone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="Phone"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/tvemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="Email"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:textStyle="bold" >
+            </TextView>
+                <TextView
+                android:id="@+id/tvpolicyid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="Policy Id"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:textStyle="bold" >
+            </TextView>
+               <TextView
+                android:id="@+id/tveffectivedate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="EffectiveDate"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:textStyle="bold" >
+            </TextView>
+               <TextView
+                android:id="@+id/tvapprovedstatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="Approved Status"
+                android:textColor="#FFFFFF"
+                 android:visibility="gone"
+                android:textSize="12dp"
+                android:textStyle="bold" >
+            </TextView>
+               <TextView
+                android:id="@+id/tvaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:text="Action"
+                android:visibility="gone"
+                android:textColor="#FFFFFF"
+                android:textSize="12dp"
+                android:textStyle="bold" >
+            </TextView>
+        </LinearLayout>
+
+        
+
+        
+
+        <ImageView
+            android:id="@+id/btn_download"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@+id/linearLayout1"
+            android:layout_below="@+id/tvupl"
+            android:background="#FF0099CC"
+            android:gravity="center"
+            android:padding="3dp"
+            android:src="@drawable/download"
+            android:text="Download"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/btn_genreport"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tvupl"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/btn_download"
+            android:background="#FF0099CC"
+            android:gravity="center"
+            android:src="@drawable/report"
+            android:text="Generate Report"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/lnmain"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="#FFFFFF"
+        android:fadeScrollbars="false" >
+    </ListView>
+
+</RelativeLayout>

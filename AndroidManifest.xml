@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:name="com.calpion.provider.ui.MainActivity"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize" >
         </activity>
         <activity
             android:name="com.calpion.provider.ui.Home"
