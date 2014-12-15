@@ -7,8 +7,9 @@ import java.util.Locale;
 
 import com.calpion.provider.R;
 import com.calpion.provider.adapter.MultiChoiceListAdapter;
-import com.calpion.provider.model.JsonParser;
+import com.calpion.provider.model.JSONParser;
 import com.calpion.provider.model.PatientBean;
+import com.calpion.provider.model.ReportstBean;
 import com.calpion.provider.ui.UploadDetailsFragment.HttpGetTask;
 
 import android.app.Fragment;
@@ -29,7 +30,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ReportListFragment extends Fragment implements OnClickListener {
-	public List<PatientBean> items = new ArrayList<PatientBean>();
+	public List<ReportstBean> items = new ArrayList<ReportstBean>();
 	private MultiChoiceListAdapter objAdapter = null;
 	String url = "http://202.83.17.167:8090/api/Upload/GetAllUploads";
 	private ProgressDialog PD;
@@ -64,7 +65,7 @@ public class ReportListFragment extends Fragment implements OnClickListener {
 					int position, long id) {
 
 				CheckBox chk = (CheckBox) view.findViewById(R.id.checkbox);
-				PatientBean bean = items.get(position);
+				ReportstBean bean = items.get(position);
 				if (bean.isSelected()) {
 					bean.setSelected(false);
 					chk.setChecked(false);
@@ -109,7 +110,7 @@ public class ReportListFragment extends Fragment implements OnClickListener {
 		StringBuffer sb = new StringBuffer();
 
 		// Retrive Data from list
-		for (PatientBean bean : items) {
+		for (ReportstBean bean : items) {
 
 			if (bean.isSelected()) {
 				sb.append(bean.getPatientName());
@@ -144,7 +145,7 @@ public class ReportListFragment extends Fragment implements OnClickListener {
 		private void populateList() {
 			for (int i = 0; i < 10; i++) {
 
-				PatientBean pb = new PatientBean();
+				ReportstBean pb = new ReportstBean();
 				pb.setAptDate("8/24/2014");
 				pb.setInsurance("Insurance" + i);
 				pb.setPriority("" + i);
@@ -154,7 +155,7 @@ public class ReportListFragment extends Fragment implements OnClickListener {
 				items.add(i, pb);
 			}
 			// ==============to be removed
-			PatientBean pb = new PatientBean();
+			ReportstBean pb = new ReportstBean();
 			pb.setAptDate("8/25/2014");
 			pb.setInsurance("Insurance");
 			pb.setPriority("");
@@ -173,13 +174,13 @@ public class ReportListFragment extends Fragment implements OnClickListener {
 
 		@Override
 		protected Boolean doInBackground(String... args) {
-			String json = null;
+			String json = "kkk";
 
 			try {
-				JsonParser jParser = new JsonParser();
+				JSONParser jParser = new JSONParser();
 				//
 				// Getting JSON from URL
-				json = jParser.httpGet(args[0]);
+				//json = jParser.httpGet(args[0]);
 				if (json.contains("success"))
 					return true;
 

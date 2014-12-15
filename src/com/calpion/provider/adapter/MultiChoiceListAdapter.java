@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.calpion.provider.R;
-import com.calpion.provider.model.PatientBean;
+import com.calpion.provider.model.ReportstBean;
 import com.calpion.provider.ui.ReportListFragment;
 
 import android.annotation.SuppressLint;
@@ -21,16 +21,16 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MultiChoiceListAdapter extends ArrayAdapter<PatientBean> {
+public class MultiChoiceListAdapter extends ArrayAdapter<ReportstBean> {
 
-	private List<PatientBean> orginlist;
-	private List<PatientBean> filterlist;
+	private List<ReportstBean> orginlist;
+	private List<ReportstBean> filterlist;
 	private LayoutInflater inflator;
 
-	public MultiChoiceListAdapter(Activity context, List<PatientBean> list) {
+	public MultiChoiceListAdapter(Activity context, List<ReportstBean> list) {
 		super(context, R.layout.report_list_item, list);
 		this.orginlist = list;
-		this.filterlist = new ArrayList<PatientBean>();
+		this.filterlist = new ArrayList<ReportstBean>();
 		filterlist.addAll(orginlist);
 
 		inflator = context.getLayoutInflater();
@@ -95,7 +95,7 @@ public class MultiChoiceListAdapter extends ArrayAdapter<PatientBean> {
 		if (charText.length() == 0) {
 			orginlist.addAll(filterlist);
 		} else {
-			for (PatientBean wp : filterlist) {
+			for (ReportstBean wp : filterlist) {
 				if (wp.getAptDate().toLowerCase().contains(charText)) {
 					orginlist.add(wp);
 				}

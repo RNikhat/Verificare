@@ -40,6 +40,7 @@ import android.widget.Toast;
 public class MainActivity extends ActionBarActivity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
+	@SuppressWarnings("deprecation")
 	private ActionBarDrawerToggle mDrawerToggle;
 
 	// nav drawer title
@@ -218,7 +219,8 @@ public class MainActivity extends ActionBarActivity {
 			fragment = new HomeFragment();
 			break;
 		case 0:
-			fragment = new UploadDetailsFragment();
+			//fragment = new UploadDetailsFragment();
+			fragment = new PatientsFragment();
 			break;
 		case 1:
 			fragment = new NewPatientFragment();
@@ -267,9 +269,9 @@ public class MainActivity extends ActionBarActivity {
 		if (getFragmentManager().getBackStackEntryCount() == 1) {
 
 			showDialog("Exit", "Are you sure you want to exit the app?");
-		} else {
-			super.onBackPressed();
-		}
+		} //else {
+			//super.onBackPressed();
+		//}
 	}
 
 	/**

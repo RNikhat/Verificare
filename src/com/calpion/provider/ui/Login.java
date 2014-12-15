@@ -23,10 +23,8 @@ import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
-
 import com.calpion.provider.R;
-import com.calpion.provider.model.JsonParser;
-
+import com.calpion.provider.model.JSONParser;
 import android.media.audiofx.BassBoost.Settings;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -78,7 +76,7 @@ public class Login extends Activity implements OnClickListener {
 	public SharedPreferences.Editor mEditor;
 	String sName;
 	// String url = "http://202.83.17.167:8090/api/User/IsValidUser";
-	String url = "http://202.83.17.167:8090/api/Upload/GetAllUploads";
+	String url = "http://202.83.17.167:8090/api/user/isvaliduser/?username=manager&password=pass";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -248,7 +246,8 @@ public class Login extends Activity implements OnClickListener {
 			} else {
 				HttpGetTask mTask = new HttpGetTask();
 				mTask.execute(url);
-				//startActivity(new Intent(getApplicationContext(), MainActivity.class));
+				// startActivity(new Intent(getApplicationContext(),
+				// MainActivity.class));
 			}
 
 			break;
@@ -290,25 +289,22 @@ public class Login extends Activity implements OnClickListener {
 
 		@Override
 		protected Boolean doInBackground(String... args) {
-			String json = null;
+			String json = "kk";
 
 			try {
-				JsonParser jParser = new JsonParser();
-				//
-				// Getting JSON from URL
-				json = jParser.httpGet(args[0]);
-				if (json.contains("success"))
+				JSONParser jParser = new JSONParser();
+				if (jParser.getResponseFromUrl(url))
 					return true;
 
 			} catch (Exception e) {
-				Log.e("Error: ", "" +e.getMessage());
+				Log.e("Error: ", "" + e.getMessage());
 			}
 			return false;
 		}
 	}
 
 	private void processResult(boolean result) {
-		if (!result) {
+		if (result) {
 
 			String mRemember = "";
 			if (cbRememberMe.isChecked())
@@ -330,9 +326,11 @@ public class Login extends Activity implements OnClickListener {
 				String sPwd = passw.getText().toString();
 
 				writeToFile(sName + "~" + sPwd, PATH + "login");
-				Intent i = new Intent(getApplicationContext(), MainActivity.class);
+				Intent i = new Intent(getApplicationContext(),
+						MainActivity.class);
 				i.putExtra("user", sName);
 				startActivity(i);
+				finish();
 
 			} catch (Exception ex) {
 				ex.printStackTrace();

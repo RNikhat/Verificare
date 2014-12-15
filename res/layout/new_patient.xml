@@ -36,6 +36,7 @@
         android:layout_below="@id/patientheader"
         android:layout_toLeftOf="@id/bclear"
         android:src="@drawable/save"
+        android:clickable="true"
         android:text="@string/save" />
 
     <ScrollView
@@ -769,7 +770,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvphone"
+                    android:id="@+id/tvphone1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

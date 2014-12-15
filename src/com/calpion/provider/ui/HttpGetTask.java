@@ -1,9 +1,9 @@
 package com.calpion.provider.ui;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import com.calpion.provider.model.JsonParser;
+import com.calpion.provider.model.JSONParser;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -36,10 +36,10 @@ public class HttpGetTask extends AsyncTask<String, String, JSONArray> {
 
 	@Override
 	protected JSONArray doInBackground(String... args) {
-		JSONArray json = null;
+		org.json.JSONArray json = null;
 
 		try {
-			JsonParser jParser = new JsonParser();
+			JSONParser jParser = new JSONParser();
 		   json = jParser.getJSONFromUrl(args[0] );
 			 
            

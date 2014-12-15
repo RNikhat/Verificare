@@ -28,6 +28,7 @@ import com.calpion.provider.model.PatientBean;
 import com.calpion.provider.ui.Login.HttpGetTask;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -54,7 +55,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class UploadDetailsFragment extends Fragment {
+public class PatientsFragment extends Fragment {
 	private ArrayList<HashMap<String, String>> mPatients, orgPatientList;
 	private ArrayList<HashMap<String, String>> mPatientsFilter;
 	public static HashMap mMap, mapBackup;
@@ -62,14 +63,14 @@ public class UploadDetailsFragment extends Fragment {
 	Context c;
 	public SimpleAdapter adapter;
 	public EditText editsearch;
-	String url = "http://202.83.17.167:8090/api/Upload/GetAllUploads";
+	String url = "http://202.83.17.167:8090/api/Patient/GetAllPatients";
 	private ProgressDialog PD;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.patient_detail_fragment,
-				container, false);
+		View view = inflater.inflate(R.layout.patients_fragment, container,
+				false);
 
 		mPatients = new ArrayList<HashMap<String, String>>();
 		orgPatientList = new ArrayList<HashMap<String, String>>();
@@ -77,10 +78,9 @@ public class UploadDetailsFragment extends Fragment {
 		btnSearch = (Button) view.findViewById(R.id.btn_search);
 		lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 		adapter = new SimpleAdapter(getActivity(), mPatients,
-				R.layout.list_item, new String[] { "id", "file_name",
-						"file_size", "uploaded_by", "upload_date", "action" },
-				new int[] { R.id.txt1, R.id.txt2, R.id.txt3, R.id.txt4,
-						R.id.txt5, R.id.txt6 });
+				R.layout.list_item, new String[] { "fname", "lname", "age",
+						"phone", "email", "edate" }, new int[] { R.id.txt1,
+						R.id.txt2, R.id.txt3, R.id.txt4, R.id.txt5, R.id.txt6 });
 		lv.setAdapter(adapter);
 
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -88,9 +88,15 @@ public class UploadDetailsFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				mMap = mPatients.get(position);
+				String msg = "SSN: " + mMap.get("ssn") + "\n" + "Gender: "
+						+ mMap.get("gender") + "\n" + "Policy No: "
+						+ mMap.get("PolicyNo") + "\n" + "Provider: "
+						+ mMap.get("provider") + "\n" + "Policy Ending: "
+						+ mMap.get("PolicyEnding") + "\n" + "City: "
+						+ mMap.get("city") + "\n" + "State: "
+						+ mMap.get("state");
+				showDialog(msg, mMap.get("fname").toString());
 
-				ExecutorService exs = Executors.newFixedThreadPool(5);
-				
 			}
 		});
 
@@ -102,21 +108,6 @@ public class UploadDetailsFragment extends Fragment {
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 				performSearch();
-				/*
-				 * String text = editsearch.getText().toString()
-				 * .toLowerCase(Locale.getDefault());
-				 * 
-				 * mPatients.clear(); ArrayList<HashMap<String, String>>
-				 * mListPatient = new ArrayList<HashMap<String, String>>(); for
-				 * (HashMap<String, String> m : orgPatientList) { if
-				 * (m.get("upload_date").contains(
-				 * editsearch.getText().toString())) { mPatients.add(m); } }
-				 * 
-				 * if (editsearch.getText().toString().trim().length() == 0)
-				 * mPatients.addAll(orgPatientList); else
-				 * mPatients.addAll(mListPatient);
-				 * adapter.notifyDataSetChanged();
-				 */
 
 			}
 
@@ -154,19 +145,16 @@ public class UploadDetailsFragment extends Fragment {
 			@Override
 			public void onClick(View arg0) {
 
-				// filter(editsearch.getText().toString());
-
 			}
 		});
-				PD = new ProgressDialog(getActivity());
-				PD.setMessage("Loading.....");
-				PD.setCancelable(true);
+		PD = new ProgressDialog(getActivity());
+		PD.setMessage("Loading.....");
+		PD.setCancelable(true);
 
 		HttpGetTask mTask = new HttpGetTask();
 		mTask.execute(url);
-	
-	
-		populateList();
+
+		// populateList();
 
 		return view;
 	}
@@ -181,7 +169,7 @@ public class UploadDetailsFragment extends Fragment {
 		mPatients.clear();
 		ArrayList<HashMap<String, String>> mListPatient = new ArrayList<HashMap<String, String>>();
 		for (HashMap<String, String> m : orgPatientList) {
-			if (m.get("upload_date").contains(editsearch.getText().toString())) {
+			if (m.get("fname").contains(editsearch.getText().toString())) {
 				mPatients.add(m);
 			}
 		}
@@ -194,70 +182,99 @@ public class UploadDetailsFragment extends Fragment {
 
 	}
 
-	public void populateList() {
+	public void populateList(JSONArray result) {
+
 		HashMap<String, String> map = new HashMap<String, String>();
+		for (int i = 0; i < result.length(); i++) {
+			JSONObject jObj;
+			try {
+				jObj = result.getJSONObject(i);
 
-		/*
-		 * for (int i = 0; i < 5; i++) {
-		 * 
-		 * map.put("id", "1"); map.put("file_name", "abc"); map.put("file_size",
-		 * "8KB"); map.put("uploaded_by", "Test"); map.put("upload_date",
-		 * "8/18/2014"); map.put("action", "test action"); mPatients.add(map); }
-		 */
-		for(int i=1;i<5;i++){
-		HashMap<String, String> map1 = new HashMap<String, String>();
-		map1.put("id"+i, "1");
-		map1.put("file_name"+i, "abc");
-		map1.put("file_size"+i, "8KB");
-		map1.put("uploaded_by"+i, "Test");
-		map1.put("upload_date"+i, "8/17/2014");
-		map1.put("action"+i, "test action");
-		mPatients.add(map1);
+				HashMap<String, String> map1 = new HashMap<String, String>();
+				map1.put("fname", jObj.getString("fname"));
+				map1.put("lname", jObj.getString("lname"));
+				map1.put("age", jObj.getString("age"));
+				map1.put("phone", jObj.getString("phone"));
+				map1.put("email", jObj.getString("email"));
+				map1.put("edate", jObj.getString("effectivedt"));
+				map1.put("gender", jObj.getString("gender"));
+				map1.put("addressline1", jObj.getString("addressline1"));
+				map1.put("addressline2", jObj.getString("addressline2"));
+				map1.put("city", jObj.getString("city"));
+				map1.put("state", jObj.getString("state"));
+				map1.put("provider", jObj.getString("provider"));
+				map1.put("ssn", jObj.getString("ssn"));
+				map1.put("policyid", jObj.getString("policyid"));
+				map1.put("PolicyNo", jObj.getString("PolicyNo"));
+				map1.put("insurancecompany", jObj.getString("insurancecompany"));
+				map1.put("physician", jObj.getString("physician"));
+
+				mPatients.add(map1);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-
 		orgPatientList.addAll(mPatients);
 		adapter.notifyDataSetChanged();
 
 	}
-	public class HttpGetTask extends AsyncTask<String, String, Boolean> {
+
+	public class HttpGetTask extends AsyncTask<String, String, JSONArray> {
 		String mResult;
-		//private ProgressDialog dialog;// = new ProgressDialog(getBaseContext());
+
+		// private ProgressDialog dialog;// = new
+		// ProgressDialog(getBaseContext());
 
 		protected void onPreExecute() {
-		//	dialog = new ProgressDialog(c);
+			// dialog = new ProgressDialog(c);
 			PD.setMessage("Processing");
 			PD.setCancelable(false);
 			PD.setCanceledOnTouchOutside(false);
 			PD.show();
 		}
 
-		protected void onPostExecute(Boolean result) {
+		protected void onPostExecute(JSONArray result) {
 			if (PD.isShowing()) {
 				PD.dismiss();
 			}
-			populateList();
+			if (result != null) {
+				populateList(result);
+			}
 
 		}
 
 		@Override
-		protected Boolean doInBackground(String... args) {
-			String json = "kkkk";
-
+		protected JSONArray doInBackground(String... args) {
+			JSONParser jParser = new JSONParser();
+			JSONArray json;
 			try {
-				JSONParser jParser = new JSONParser();
-				//
-				// Getting JSON from URL
-				//json = jParser.httpGet(args[0]);
-				if (json.contains("success"))
-					return true;
+				json = jParser.getJSONFromUrl(url);
+				if (json != null)
+					return json;
+				// for (int i = 0; i < json.length(); i++) {
+
+				// }
 
 			} catch (Exception e) {
-				Log.e("Error: ", " "+e.getMessage());
+				Log.e("Error: ", " " + e.getMessage());
+				return null;
 			}
-			return false;
+			return json;
 		}
 	}
+
 	public void setText(String item) {
+	}
+
+	private void showDialog(String string, String fname) {
+		AlertDialog.Builder ab = new AlertDialog.Builder(getActivity());
+		ab.setTitle(fname + "'s " + "details");
+		ab.setMessage(string);
+		ab.setIcon(android.R.drawable.ic_dialog_alert);
+		ab.setNeutralButton("OK", null);
+		ab.show();
+
 	}
 
 }
